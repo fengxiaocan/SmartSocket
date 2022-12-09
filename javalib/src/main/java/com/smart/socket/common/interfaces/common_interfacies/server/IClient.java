@@ -1,8 +1,8 @@
 package com.smart.socket.common.interfaces.common_interfacies.server;
 
-import com.smart.socket.core.protocol.IReaderProtocol;
 import com.smart.socket.common.interfaces.common_interfacies.client.IDisConnectable;
 import com.smart.socket.common.interfaces.common_interfacies.client.ISender;
+import com.smart.socket.core.protocol.IReaderProtocol;
 
 import java.io.Serializable;
 

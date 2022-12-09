@@ -6,8 +6,11 @@ import com.smart.socket.client.sdk.client.ConnectionInfo;
 import com.smart.socket.client.sdk.client.OkSocketOptions;
 import com.smart.socket.client.sdk.client.connection.IConnectionManager;
 import com.smart.socket.common.interfaces.common_interfacies.dispatcher.IRegister;
+import com.smart.socket.common.interfaces.common_interfacies.server.IClient;
+import com.smart.socket.common.interfaces.common_interfacies.server.IClientPool;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerActionListener;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerManager;
+import com.smart.socket.server.impl.OkServerOptions;
 
 /**
  * OkSocket是一款轻量级的Socket通讯框架,可以提供单工,双工的TCP通讯.
@@ -24,8 +27,32 @@ public class OkSocket {
      * @param serverPort
      * @return
      */
-    public static IRegister<IServerActionListener, IServerManager<com.smart.socket.server.impl.OkServerOptions>> server(int serverPort) {
-        return (IRegister<IServerActionListener, IServerManager<com.smart.socket.server.impl.OkServerOptions>>) holder.getServer(serverPort);
+    public static IRegister<IServerActionListener, IServerManager<OkServerOptions>> server(int serverPort) {
+        return (IRegister<IServerActionListener, IServerManager<OkServerOptions>>) holder.getServer(serverPort);
+    }
+
+    /**
+     * 获得一个已存在的SocketServer服务器.
+     *
+     * @param serverPort
+     * @return
+     */
+    public static IServerManager findServer(int serverPort) {
+        return holder.findServer(serverPort);
+    }
+
+    /**
+     * 获得一个SocketServer
+     *
+     * @param serverPort
+     * @return
+     */
+    public static IClientPool<IClient, String> findClientPool(int serverPort) {
+        IServerManager server = holder.findServer(serverPort);
+        if (server != null && server.isLive()) {
+            return server.getClientPool();
+        }
+        return null;
     }
 
     /**

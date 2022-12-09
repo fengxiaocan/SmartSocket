@@ -1,8 +1,8 @@
 package com.smart.socket.server.impl.clientpojo;
 
-import com.smart.socket.core.iocore.interfaces.ISendPack;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClient;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClientPool;
+import com.smart.socket.core.iocore.interfaces.ISendPack;
 import com.smart.socket.server.exceptions.CacheException;
 
 public class ClientPoolImpl extends AbsClientPool<String, IClient> implements IClientPool<IClient, String> {
@@ -35,11 +35,11 @@ public class ClientPoolImpl extends AbsClientPool<String, IClient> implements IC
     }
 
     @Override
-    public void sendToAll(final ISendPack sendable) {
+    public void sendToAll(final ISendPack sendPack) {
         echoRun(new Echo<String, IClient>() {
             @Override
             public void onEcho(String key, IClient value) {
-                value.send(sendable);
+                value.send(sendPack);
             }
         });
     }

@@ -1,6 +1,10 @@
 package com.smart.socket.client.impl.client.iothreads;
 
 
+import com.smart.socket.client.impl.exceptions.ManuallyDisconnectException;
+import com.smart.socket.client.sdk.client.OkSocketOptions;
+import com.smart.socket.common.interfaces.basic.AbsLoopThread;
+import com.smart.socket.common.interfaces.common_interfacies.IIOManager;
 import com.smart.socket.core.iocore.ReaderImpl;
 import com.smart.socket.core.iocore.WriterImpl;
 import com.smart.socket.core.iocore.interfaces.IReader;
@@ -9,10 +13,6 @@ import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.core.iocore.interfaces.IWriter;
 import com.smart.socket.core.protocol.IReaderProtocol;
 import com.smart.socket.core.utils.SLog;
-import com.smart.socket.client.impl.exceptions.ManuallyDisconnectException;
-import com.smart.socket.client.sdk.client.OkSocketOptions;
-import com.smart.socket.common.interfaces.basic.AbsLoopThread;
-import com.smart.socket.common.interfaces.common_interfacies.IIOManager;
 
 import java.io.InputStream;
 import java.io.OutputStream;

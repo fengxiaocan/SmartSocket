@@ -1,11 +1,11 @@
 package com.smart.socket.client.sdk.client.connection;
 
 
-import com.smart.socket.core.utils.SLog;
 import com.smart.socket.client.impl.exceptions.ManuallyDisconnectException;
 import com.smart.socket.client.sdk.client.ConnectionInfo;
 import com.smart.socket.common.interfaces.basic.AbsLoopThread;
 import com.smart.socket.common.interfaces.utils.ThreadUtils;
+import com.smart.socket.core.utils.SLog;
 
 import java.util.Iterator;
 

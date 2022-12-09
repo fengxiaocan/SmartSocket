@@ -1,7 +1,5 @@
 package com.smart.socket.client.impl.client;
 
-import com.smart.socket.core.iocore.interfaces.ISendPack;
-import com.smart.socket.core.utils.SLog;
 import com.smart.socket.client.impl.client.action.ActionHandler;
 import com.smart.socket.client.impl.client.iothreads.IOThreadManager;
 import com.smart.socket.client.impl.exceptions.ManuallyDisconnectException;
@@ -15,6 +13,8 @@ import com.smart.socket.client.sdk.client.connection.IConnectionManager;
 import com.smart.socket.common.interfaces.common_interfacies.IIOManager;
 import com.smart.socket.common.interfaces.default_protocol.DefaultX509ProtocolTrustManager;
 import com.smart.socket.common.interfaces.utils.TextUtils;
+import com.smart.socket.core.iocore.interfaces.ISendPack;
+import com.smart.socket.core.utils.SLog;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

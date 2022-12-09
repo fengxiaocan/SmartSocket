@@ -1,9 +1,9 @@
 package com.smart.socket.server.impl;
 
 
+import com.smart.socket.common.interfaces.default_protocol.DefaultNormalReaderProtocol;
 import com.smart.socket.core.iocore.interfaces.IIOCoreOptions;
 import com.smart.socket.core.protocol.IReaderProtocol;
-import com.smart.socket.common.interfaces.default_protocol.DefaultNormalReaderProtocol;
 
 import java.nio.ByteOrder;
 
@@ -50,12 +50,51 @@ public class OkServerOptions implements IIOCoreOptions {
         OkServerOptions okOptions = new OkServerOptions();
         okOptions.mReaderProtocol = new DefaultNormalReaderProtocol();
         okOptions.mConnectCapacity = 50;
-        okOptions.mMaxReadDataMB = 10;
-        okOptions.mWritePackageBytes = 100;
-        okOptions.mReadPackageBytes = 50;
+        okOptions.mMaxReadDataMB = 50;
+        okOptions.mWritePackageBytes = 1024 * 8;
+        okOptions.mReadPackageBytes = 1024 * 8;
         okOptions.mReadOrder = ByteOrder.BIG_ENDIAN;
         okOptions.mWriteOrder = ByteOrder.BIG_ENDIAN;
         return okOptions;
+    }
+
+    public int getConnectCapacity() {
+        return mConnectCapacity;
+    }
+
+    @Override
+    public ByteOrder getReadByteOrder() {
+        return mReadOrder;
+    }
+
+    @Override
+    public int getMaxReadDataMB() {
+        return mMaxReadDataMB;
+    }
+
+    @Override
+    public IReaderProtocol getReaderProtocol() {
+        return mReaderProtocol;
+    }
+
+    @Override
+    public ByteOrder getWriteByteOrder() {
+        return mWriteOrder;
+    }
+
+    @Override
+    public int getReadPackageBytes() {
+        return mReadPackageBytes;
+    }
+
+    @Override
+    public int getWritePackageBytes() {
+        return mWritePackageBytes;
+    }
+
+    @Override
+    public boolean isDebug() {
+        return isDebug;
     }
 
     public static class Builder {
@@ -115,45 +154,5 @@ public class OkServerOptions implements IIOCoreOptions {
         public OkServerOptions build() {
             return mOptions;
         }
-    }
-
-
-    public int getConnectCapacity() {
-        return mConnectCapacity;
-    }
-
-    @Override
-    public ByteOrder getReadByteOrder() {
-        return mReadOrder;
-    }
-
-    @Override
-    public int getMaxReadDataMB() {
-        return mMaxReadDataMB;
-    }
-
-    @Override
-    public IReaderProtocol getReaderProtocol() {
-        return mReaderProtocol;
-    }
-
-    @Override
-    public ByteOrder getWriteByteOrder() {
-        return mWriteOrder;
-    }
-
-    @Override
-    public int getReadPackageBytes() {
-        return mReadPackageBytes;
-    }
-
-    @Override
-    public int getWritePackageBytes() {
-        return mWritePackageBytes;
-    }
-
-    @Override
-    public boolean isDebug() {
-        return isDebug;
     }
 }

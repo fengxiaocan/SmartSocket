@@ -11,5 +11,5 @@ public interface IClientPool<T, K> {
 
     int size();
 
-    void sendToAll(ISendPack sendable);
+    void sendToAll(ISendPack sendPack);
 }

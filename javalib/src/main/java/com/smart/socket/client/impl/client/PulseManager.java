@@ -1,11 +1,11 @@
 package com.smart.socket.client.impl.client;
 
-import com.smart.socket.core.iocore.interfaces.IPulseSender;
 import com.smart.socket.client.impl.exceptions.DogDeadException;
 import com.smart.socket.client.sdk.client.OkSocketOptions;
 import com.smart.socket.client.sdk.client.bean.IPulse;
 import com.smart.socket.client.sdk.client.connection.IConnectionManager;
 import com.smart.socket.common.interfaces.basic.AbsLoopThread;
+import com.smart.socket.core.iocore.interfaces.IPulseSender;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

@@ -38,16 +38,16 @@ public class WriterImpl implements IWriter<IIOCoreOptions> {
 
     @Override
     public boolean write() throws RuntimeException {
-        ISendPack sendable = null;
+        ISendPack sendPack = null;
         try {
-            sendable = mQueue.take();
+            sendPack = mQueue.take();
         } catch (InterruptedException e) {
             //ignore;
         }
 
-        if (sendable != null) {
+        if (sendPack != null) {
             try {
-                byte[] sendBytes = sendable.parse();
+                byte[] sendBytes = sendPack.parse();
                 int packageSize = mOkOptions.getWritePackageBytes();
                 int remainingCount = sendBytes.length;
                 ByteBuffer writeBuf = ByteBuffer.allocate(packageSize);
@@ -74,10 +74,10 @@ public class WriterImpl implements IWriter<IIOCoreOptions> {
                     index += realWriteLength;
                     remainingCount -= realWriteLength;
                 }
-                if (sendable instanceof IPulseSender) {
-                    mStateSender.sendBroadcast(IOAction.ACTION_PULSE_REQUEST, sendable);
+                if (sendPack instanceof IPulseSender) {
+                    mStateSender.sendBroadcast(IOAction.ACTION_PULSE_REQUEST, sendPack);
                 } else {
-                    mStateSender.sendBroadcast(IOAction.ACTION_WRITE_COMPLETE, sendable);
+                    mStateSender.sendBroadcast(IOAction.ACTION_WRITE_COMPLETE, sendPack);
                 }
             } catch (Exception e) {
                 WriteException writeException = new WriteException(e);

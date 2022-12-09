@@ -1,10 +1,10 @@
 package com.smart.socket.server.impl;
 
-import com.smart.socket.core.utils.SLog;
 import com.smart.socket.common.interfaces.basic.AbsLoopThread;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClient;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClientPool;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerManagerPrivate;
+import com.smart.socket.core.utils.SLog;
 import com.smart.socket.server.action.IAction;
 import com.smart.socket.server.exceptions.IllegalAccessException;
 import com.smart.socket.server.exceptions.InitiativeDisconnectException;
@@ -93,8 +93,8 @@ public class ServerManagerImpl extends AbsServerRegisterProxy implements IServer
     }
 
     @Override
-    public IClientPool<String, IClient> getClientPool() {
-        return (IClientPool)mClientPoolImpl;
+    public IClientPool<IClient, String> getClientPool() {
+        return mClientPoolImpl;
     }
 
     private class AcceptThread extends AbsLoopThread {

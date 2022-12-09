@@ -1,11 +1,11 @@
 package com.smart.socket.client.impl.client.iothreads;
 
-import com.smart.socket.core.iocore.interfaces.IStateSender;
-import com.smart.socket.core.iocore.interfaces.IWriter;
-import com.smart.socket.core.utils.SLog;
 import com.smart.socket.client.impl.exceptions.ManuallyDisconnectException;
 import com.smart.socket.client.sdk.client.action.IAction;
 import com.smart.socket.common.interfaces.basic.AbsLoopThread;
+import com.smart.socket.core.iocore.interfaces.IStateSender;
+import com.smart.socket.core.iocore.interfaces.IWriter;
+import com.smart.socket.core.utils.SLog;
 
 import java.io.IOException;
 

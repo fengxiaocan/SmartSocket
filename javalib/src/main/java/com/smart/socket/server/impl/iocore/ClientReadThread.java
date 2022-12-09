@@ -1,9 +1,9 @@
 package com.smart.socket.server.impl.iocore;
 
+import com.smart.socket.common.interfaces.basic.AbsLoopThread;
 import com.smart.socket.core.iocore.interfaces.IReader;
 import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.core.utils.SLog;
-import com.smart.socket.common.interfaces.basic.AbsLoopThread;
 import com.smart.socket.server.action.IAction;
 import com.smart.socket.server.exceptions.InitiativeDisconnectException;
 

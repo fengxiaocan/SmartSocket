@@ -1,16 +1,16 @@
 package com.smart.socket.client.impl.client.action;
 
-import com.smart.socket.core.iocore.interfaces.IPulseSender;
-import com.smart.socket.core.iocore.interfaces.ISendPack;
-import com.smart.socket.core.iocore.interfaces.IStateSender;
-import com.smart.socket.core.pojo.OriginalData;
-import com.smart.socket.core.utils.SLog;
 import com.smart.socket.client.sdk.client.ConnectionInfo;
 import com.smart.socket.client.sdk.client.OkSocketOptions;
 import com.smart.socket.client.sdk.client.action.ISocketActionListener;
 import com.smart.socket.client.sdk.client.connection.IConnectionManager;
 import com.smart.socket.common.interfaces.basic.AbsLoopThread;
 import com.smart.socket.common.interfaces.common_interfacies.dispatcher.IRegister;
+import com.smart.socket.core.iocore.interfaces.IPulseSender;
+import com.smart.socket.core.iocore.interfaces.ISendPack;
+import com.smart.socket.core.iocore.interfaces.IStateSender;
+import com.smart.socket.core.pojo.OriginalData;
+import com.smart.socket.core.utils.SLog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,9 +20,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.smart.socket.core.iocore.interfaces.IOAction.ACTION_PULSE_REQUEST;
-import static com.smart.socket.core.iocore.interfaces.IOAction.ACTION_READ_COMPLETE;
-import static com.smart.socket.core.iocore.interfaces.IOAction.ACTION_WRITE_COMPLETE;
+
 import static com.smart.socket.client.sdk.client.action.IAction.ACTION_CONNECTION_FAILED;
 import static com.smart.socket.client.sdk.client.action.IAction.ACTION_CONNECTION_SUCCESS;
 import static com.smart.socket.client.sdk.client.action.IAction.ACTION_DISCONNECTION;
@@ -30,6 +28,9 @@ import static com.smart.socket.client.sdk.client.action.IAction.ACTION_READ_THRE
 import static com.smart.socket.client.sdk.client.action.IAction.ACTION_READ_THREAD_START;
 import static com.smart.socket.client.sdk.client.action.IAction.ACTION_WRITE_THREAD_SHUTDOWN;
 import static com.smart.socket.client.sdk.client.action.IAction.ACTION_WRITE_THREAD_START;
+import static com.smart.socket.core.iocore.interfaces.IOAction.ACTION_PULSE_REQUEST;
+import static com.smart.socket.core.iocore.interfaces.IOAction.ACTION_READ_COMPLETE;
+import static com.smart.socket.core.iocore.interfaces.IOAction.ACTION_WRITE_COMPLETE;
 
 
 /**
@@ -170,8 +171,8 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
             }
             case ACTION_WRITE_COMPLETE: {
                 try {
-                    ISendPack sendable = (ISendPack) arg;
-                    responseHandler.onSocketWriteResponse(mConnectionInfo, action, sendable);
+                    ISendPack sendPack = (ISendPack) arg;
+                    responseHandler.onSocketWriteResponse(mConnectionInfo, action, sendPack);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -189,8 +190,8 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
             }
             case ACTION_PULSE_REQUEST: {
                 try {
-                    IPulseSender sendable = (IPulseSender) arg;
-                    responseHandler.onPulseSend(mConnectionInfo, sendable);
+                    IPulseSender sender = (IPulseSender) arg;
+                    responseHandler.onPulseSend(mConnectionInfo, sender);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,68 +1,131 @@
 package com.smart;
 
-import com.smart.socket.client.sdk.OkSocket;
+import com.smart.ext.file.FileSocketServer;
+import com.smart.ext.file.OnFileServerListener;
+import com.smart.ext.head.Headers;
+import com.smart.ext.pack.StringSendPack;
+import com.smart.ext.parse.SmartParseData;
+import com.smart.ext.server.SmartServerSocket;
+import com.smart.ext.server.impl.SmartClientIOCallback;
+import com.smart.ext.server.impl.SmartServerListener;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClient;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClientIOCallback;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClientPool;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerShutdown;
 import com.smart.socket.core.iocore.interfaces.ISendPack;
-import com.smart.socket.core.pojo.OriginalData;
-import com.smart.socket.server.action.ServerActionAdapter;
-import com.smart.socket.server.impl.OkServerOptions;
-import com.smart.ai.protocol.SmartReaderProtocol;
 
-import java.nio.ByteBuffer;
+import java.io.File;
+import java.net.Socket;
 
 public class Test {
     public static void main(String[] args) {
-        OkServerOptions.Builder builder = new OkServerOptions.Builder(OkServerOptions.getDefault())
-                .setReaderProtocol(new SmartReaderProtocol())
-                .setMaxReadDataMB(1000)
-                .setWritePackageBytes(1024);
-
-        OkSocket.server(33333).registerReceiver(new ServerActionAdapter() {
+        SmartServerSocket.server(new SmartServerListener(33333) {
             @Override
-            public void onServerListening(int serverPort) {
-                System.err.println("onServerListening" + serverPort);
+            public void onClientConnected(final IClient client, int serverPort, IClientPool clientPool) {
+                super.onClientConnected(client, serverPort, clientPool);
+                System.err.println("onClientConnected:" + client.getHostName());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                            client.send(new StringSendPack("看过《风云》漫画的小伙伴都知道，摩诃无量是聂风和步惊云的合璧技能，威力非常可怕，堪称《风云》系列威能最强的武学，漫画中步惊云和聂风凭借这一招击败了众多强敌，然而令人意外的是，在《风云》第三部面对连城志这个最恐怖敌人的时候，风云二人却没有使用摩诃无量，这是怎么回事呢？"));
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
 
             @Override
-            public void onClientConnected(IClient client, int serverPort, IClientPool clientPool) {
-                System.err.println("onClientConnected" + client.getHostIp());
-                client.addIOCallback(new IClientIOCallback() {
-                    @Override
-                    public void onClientRead(OriginalData data, IClient client, IClientPool<IClient, String> clientPool) {
-                        System.err.println("onClientWrite:" + new String(data.getBodyBytes()));
-                    }
-
-                    @Override
-                    public void onClientWrite(ISendPack send, IClient client, IClientPool<IClient, String> clientPool) {
-                    }
-                });
-            }
-
-            @Override
-            public void onClientDisconnected(IClient client, int serverPort, IClientPool clientPool) {
-                System.err.println("onClientDisconnected:" + client.getHostIp());
+            public void onClientDisconnected(final IClient client, int serverPort, IClientPool clientPool) {
+                super.onClientDisconnected(client, serverPort, clientPool);
+                System.err.println("onClientDisconnected:" + client.getHostName());
             }
 
             @Override
             public void onServerWillBeShutdown(int serverPort, IServerShutdown shutdown, IClientPool clientPool, Throwable throwable) {
-                System.err.println("onServerWillBeShutdown:" + serverPort);
+                super.onServerWillBeShutdown(serverPort, shutdown, clientPool, throwable);
+                System.err.println("onServerWillBeShutdown");
+            }
+
+            @Override
+            public IClientIOCallback onCreateClientIOCallback(IClient client, int serverPort, IClientPool clientPool) {
+                return new SmartClientIOCallback() {
+                    @Override
+                    public void onClientRead(SmartParseData dataPack, IClient client, IClientPool<IClient, String> clientPool) {
+                        if (dataPack.isString()) {
+                            System.err.println("收到客户端的信息:" + dataPack.asString());
+                        }
+                    }
+
+                    @Override
+                    public void onClientWrite(ISendPack pack, IClient client, IClientPool<IClient, String> clientPool) {
+                    }
+                };
+            }
+
+            @Override
+            public void onServerListening(int serverPort) {
+                System.err.println("onServerListening:" + serverPort);
             }
 
             @Override
             public void onServerAlreadyShutdown(int serverPort) {
                 System.err.println("onServerAlreadyShutdown:" + serverPort);
             }
-        }).listen(builder.build());
+        }).listen();
 
-        ByteBuffer buffer = ByteBuffer.allocate(2);
-        buffer.putChar((char) 12700);
-        byte[] bytes = buffer.array();
-        for (int i = 0; i < bytes.length; i++) {
-            System.err.println(i + ":" + bytes[i]);
-        }
+        Headers headers = new Headers();
+        File file = new File(".", "88957204.gif");
+        headers.addHeader("name",file.getName());
+        FileSocketServer server = new FileSocketServer(55066);
+        server.setMaxTransferCount(500);
+        server.setListener(new OnFileServerListener.IMPL() {
+            @Override
+            public void onServerListening(int serverPort) {
+                System.err.println("FileSocketServer onServerListening:" + serverPort);
+            }
+
+            @Override
+            public void onClientConnected(Socket socket, int serverPort) {
+                System.err.println("onClientConnected:" + getHostName(socket));
+            }
+
+            @Override
+            public void onClientDisconnected(Socket socket, int serverPort) {
+                System.err.println("onClientDisconnected:" + getHostName(socket));
+            }
+
+            private String getHostName(Socket socket) {
+                if (socket != null) {
+                    return socket.getLocalAddress().getHostName();
+                }
+                return "0.0.0.0";
+            }
+
+            @Override
+            public void onClientTransferComplete(Socket socket, int serverPort) {
+                System.err.println("onClientTransferComplete:" + getHostName(socket));
+            }
+
+            @Override
+            public void onClientTransferError(Socket socket, int serverPort, Throwable throwable) {
+                System.err.println("onClientTransferError:" + getHostName(socket));
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onServerError(int serverPort) {
+                System.err.println("onServerError:" + serverPort);
+            }
+
+            @Override
+            public void onServerShadow(int serverPort) {
+                System.err.println("onServerShadow:" + serverPort);
+            }
+        });
+        server.sendServer(file, headers);
     }
 
 }

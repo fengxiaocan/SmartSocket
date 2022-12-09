@@ -1,12 +1,12 @@
 package com.smart.socket.server.action;
 
-import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.common.interfaces.basic.AbsLoopThread;
 import com.smart.socket.common.interfaces.common_interfacies.dispatcher.IRegister;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClient;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClientPool;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerActionListener;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerManager;
+import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.server.impl.OkServerOptions;
 
 import java.io.Serializable;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+
 
 import static com.smart.socket.server.action.IAction.Server.ACTION_CLIENT_CONNECTED;
 import static com.smart.socket.server.action.IAction.Server.ACTION_CLIENT_DISCONNECTED;

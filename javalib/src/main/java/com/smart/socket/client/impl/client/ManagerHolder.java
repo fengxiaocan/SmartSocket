@@ -23,37 +23,29 @@ public class ManagerHolder {
 
     private volatile Map<Integer, IServerManagerPrivate> mServerManagerMap = new HashMap<>();
 
-    private static class InstanceHolder {
-        private static final ManagerHolder INSTANCE = new ManagerHolder();
+    private ManagerHolder() {
+        mConnectionManagerMap.clear();
     }
 
     public static ManagerHolder getInstance() {
         return InstanceHolder.INSTANCE;
     }
 
-    private ManagerHolder() {
-        mConnectionManagerMap.clear();
-    }
-
     public IServerManager getServer(int localPort) {
         IServerManagerPrivate manager = mServerManagerMap.get(localPort);
         if (manager == null) {
-//            manager = (IServerManagerPrivate) SPIUtils.load(IServerManager.class);
             manager = new ServerManagerImpl();
-//            if (manager == null) {
-//                String err = "Oksocket.Server() load error. Server plug-in are required!" +
-//                        " For details link to https://github.com/xuuhaoo/OkSocket";
-//                SLog.e(err);
-//                throw new IllegalStateException(err);
-//            } else {
-                synchronized (mServerManagerMap) {
-                    mServerManagerMap.put(localPort, manager);
-                }
-                manager.initServerPrivate(localPort);
-                return manager;
-//            }
+            synchronized (mServerManagerMap) {
+                mServerManagerMap.put(localPort, manager);
+            }
+            manager.initServerPrivate(localPort);
+            return manager;
         }
         return manager;
+    }
+
+    public IServerManager findServer(int localPort) {
+        return mServerManagerMap.get(localPort);
     }
 
     public IConnectionManager getConnection(ConnectionInfo info) {
@@ -116,6 +108,10 @@ public class ManagerHolder {
             list.add(manager);
         }
         return list;
+    }
+
+    private static class InstanceHolder {
+        private static final ManagerHolder INSTANCE = new ManagerHolder();
     }
 
 

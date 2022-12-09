@@ -1,9 +1,9 @@
 package com.smart.socket.client.sdk.client.action;
 
+import com.smart.socket.client.sdk.client.ConnectionInfo;
+import com.smart.socket.core.iocore.interfaces.IPulseSender;
 import com.smart.socket.core.iocore.interfaces.ISendPack;
 import com.smart.socket.core.pojo.OriginalData;
-import com.smart.socket.core.iocore.interfaces.IPulseSender;
-import com.smart.socket.client.sdk.client.ConnectionInfo;
 
 /**
  * Socket行为适配器,是行为监听器的一个Simple版本,详情请见{@link ISocketActionListener}

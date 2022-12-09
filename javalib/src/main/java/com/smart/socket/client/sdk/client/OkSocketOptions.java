@@ -1,12 +1,12 @@
 package com.smart.socket.client.sdk.client;
 
-import com.smart.socket.core.iocore.interfaces.IIOCoreOptions;
-import com.smart.socket.core.protocol.IReaderProtocol;
 import com.smart.socket.client.impl.client.action.ActionDispatcher;
 import com.smart.socket.client.sdk.client.connection.AbsReconnectionManager;
 import com.smart.socket.client.sdk.client.connection.DefaultReconnectManager;
 import com.smart.socket.client.sdk.client.connection.abilities.IConfiguration;
 import com.smart.socket.common.interfaces.default_protocol.DefaultNormalReaderProtocol;
+import com.smart.socket.core.iocore.interfaces.IIOCoreOptions;
+import com.smart.socket.core.protocol.IReaderProtocol;
 
 import java.nio.ByteOrder;
 
@@ -397,10 +397,10 @@ public class OkSocketOptions implements IIOCoreOptions {
         okOptions.mPulseFrequency = 5 * 1000;
         okOptions.mIOThreadMode = IOThreadMode.DUPLEX;
         okOptions.mReaderProtocol = new DefaultNormalReaderProtocol();
-        okOptions.mMaxReadDataMB = 5;
+        okOptions.mMaxReadDataMB = 50;
         okOptions.mConnectTimeoutSecond = 3;
-        okOptions.mWritePackageBytes = 100;
-        okOptions.mReadPackageBytes = 50;
+        okOptions.mWritePackageBytes = 1024;
+        okOptions.mReadPackageBytes = 1024;
         okOptions.mReadByteOrder = ByteOrder.BIG_ENDIAN;
         okOptions.mWriteOrder = ByteOrder.BIG_ENDIAN;
         okOptions.isConnectionHolden = true;

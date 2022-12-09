@@ -1,4 +1,4 @@
-package com.smart.ai.protocol;
+package com.smart.ext.protocol;
 
 
 import com.smart.socket.core.protocol.IReaderProtocol;

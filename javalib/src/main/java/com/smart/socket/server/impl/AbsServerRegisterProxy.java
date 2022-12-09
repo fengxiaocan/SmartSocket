@@ -1,10 +1,10 @@
 package com.smart.socket.server.impl;
 
 
-import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.common.interfaces.common_interfacies.dispatcher.IRegister;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerActionListener;
 import com.smart.socket.common.interfaces.common_interfacies.server.IServerManager;
+import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.server.action.ServerActionDispatcher;
 
 import java.io.Serializable;

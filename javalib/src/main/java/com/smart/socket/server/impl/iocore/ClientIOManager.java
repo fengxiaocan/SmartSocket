@@ -1,5 +1,6 @@
 package com.smart.socket.server.impl.iocore;
 
+import com.smart.socket.common.interfaces.common_interfacies.IIOManager;
 import com.smart.socket.core.iocore.ReaderImpl;
 import com.smart.socket.core.iocore.WriterImpl;
 import com.smart.socket.core.iocore.interfaces.IReader;
@@ -7,7 +8,6 @@ import com.smart.socket.core.iocore.interfaces.ISendPack;
 import com.smart.socket.core.iocore.interfaces.IStateSender;
 import com.smart.socket.core.iocore.interfaces.IWriter;
 import com.smart.socket.core.protocol.IReaderProtocol;
-import com.smart.socket.common.interfaces.common_interfacies.IIOManager;
 import com.smart.socket.server.exceptions.InitiativeDisconnectException;
 import com.smart.socket.server.impl.OkServerOptions;
 

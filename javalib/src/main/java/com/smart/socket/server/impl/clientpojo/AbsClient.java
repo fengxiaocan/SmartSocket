@@ -1,9 +1,9 @@
 package com.smart.socket.server.impl.clientpojo;
 
-import com.smart.socket.core.pojo.OriginalData;
-import com.smart.socket.core.protocol.IReaderProtocol;
 import com.smart.socket.common.interfaces.common_interfacies.server.IClient;
 import com.smart.socket.common.interfaces.utils.TextUtils;
+import com.smart.socket.core.pojo.OriginalData;
+import com.smart.socket.core.protocol.IReaderProtocol;
 import com.smart.socket.server.action.ClientActionDispatcher;
 import com.smart.socket.server.impl.OkServerOptions;
 
